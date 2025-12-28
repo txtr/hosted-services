@@ -1,0 +1,17 @@
+services:
+  - Heimdall:
+    port: 80
+  - Immich:
+    port: 2283
+  - qBittorrent:
+    port: 6666
+  - HTTPD:
+    port: 8080
+  - Bitwarden Lite:
+    port: 5555
+  - MonicaHQ:
+    port: 1111
+  - wg-easy:
+    port: 1000
+  - n8n:
+    port: 2222
