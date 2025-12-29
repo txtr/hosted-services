@@ -43,6 +43,7 @@ services:
       - 8080:8080
     volumes:
       - ./config/rclone/rclone.conf:/rclone.conf
+      - /:/host
 
 
 
@@ -161,6 +162,33 @@ services:
 
 
 
+
+  bitwarden:
+    depends_on:
+      - db
+    env_file:
+      - settings.env
+    image: ghcr.io/bitwarden/lite
+    restart: always
+    ports:
+      - "8888:8080"
+    volumes:
+      - bitwarden:/etc/bitwarden
+
+  db:
+    environment:
+      MARIADB_USER: "bitwarden"
+      MARIADB_PASSWORD: "super_strong_password"
+      MARIADB_DATABASE: "bitwarden_vault"
+      MARIADB_RANDOM_ROOT_PASSWORD: "true"
+    image: mariadb:10
+    restart: always
+    volumes:
+      - data:/var/lib/mysql
+  
+
+
+
 networks:
   wg:
     driver: bridge
@@ -174,8 +202,8 @@ networks:
 
 
 
-
-
 volumes:
   immich-model-cache:
   etc_wireguard:
+  bitwarden:
+  data:
